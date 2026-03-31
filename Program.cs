@@ -1,13 +1,11 @@
-﻿using RandomThingsGenerator;
-
-Print("PIN");
-Print(PasswordGenerator.GeneratePin(10));
+﻿Print("PIN");
+Print(PasswordGenerator.PasswordGenerator.GeneratePin(10));
 
 Print("AlphaNumeric");
-Print(PasswordGenerator.GenerateAlphanumeric(10));
+Print(PasswordGenerator.PasswordGenerator.GenerateAlphanumeric(10));
 
 Print("Phrase");
-Print(PasswordGenerator.GeneratePhrase(10, '+'));
+Print(PasswordGenerator.PasswordGenerator.GeneratePhrase(10, '+'));
 
 
 void Print<T>(T value)

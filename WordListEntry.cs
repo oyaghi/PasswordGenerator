@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
 
-namespace RandomThingsGenerator;
+namespace PasswordGenerator;
 
 public class WordListEntry
 {

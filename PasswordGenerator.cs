@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace RandomThingsGenerator;
+namespace PasswordGenerator;
 
 public static class PasswordGenerator
 {
