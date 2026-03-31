@@ -8,6 +8,7 @@ namespace RandomThingsGenerator;
 
 public static class PasswordGenerator
 {
+    private static readonly IReadOnlyList<WordListEntry> WordList = LoadWordList();
     private static readonly List<char> Nums = Enumerable.Range('0', 10).Select(c => (char)c).ToList();
     private static readonly List<char> AllChars =
     [
@@ -61,25 +62,23 @@ public static class PasswordGenerator
     /// <returns>A string representing the generated phrase with the specified number of words and separator.</returns>
     public static string GeneratePhrase(int length, char separator = ' ')
     {
-        var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
+        var password = new string[length];
+        for (int i = 0; i < length; i++)
         {
-            Delimiter = "\t",
-        };
+            var randomIndex = RandomNumberGenerator.GetInt32(0, WordList.Count);
+            password[i] = WordList[randomIndex].Word;
+        }
+
+        return string.Join(separator, password);
+    }
+
+    private static IReadOnlyList<WordListEntry> LoadWordList()
+    {
+        var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = "\t" };
 
         using var streamReader = new StreamReader("eff_large_wordlist.csv");
         using var csv = new CsvReader(streamReader, csvConfig);
 
-        var records = csv.GetRecords<WordListEntry>().ToList();
-        var password = new StringBuilder();
-
-        for (int i = 0; i < length; i++)
-        {
-            var randomIndex = RandomNumberGenerator.GetInt32(0, records.Count);
-
-            password.Append(records[randomIndex].Word);
-            password.Append(separator);
-        }
-
-        return password.ToString().TrimEnd(separator);
+        return csv.GetRecords<WordListEntry>().ToList();
     }
 }
